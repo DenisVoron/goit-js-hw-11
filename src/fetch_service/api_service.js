@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_KEY = '29561801-8060ff7959275b65131112eea';
 const BASE_URL = 'https://pixabay.com/api/';
-const SETTINGS_URL = 'per_page=40&image_type=photo&orientation=horizontal&safesearch=true';
+const SETTINGS_URL = 'per_page=10&image_type=photo&orientation=horizontal&safesearch=true';
 
 export default class PixApiService {
     constructor() {

@@ -18,3 +18,15 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+
+.gallery {
+  margin-top: 20px;
+}
+
+.button.is-hiden {
+  display: none;
+}
+
+.is-hidden {
+  visibility: hidden;
+}
