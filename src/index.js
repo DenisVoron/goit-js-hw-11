@@ -1,6 +1,8 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 import galleryItemTpl from "./templates/gallery_templates";
 import PixApiService from "./fetch_service/api_service";
 import LoadMoreBtn from "./components/load-more-btn";
@@ -59,20 +61,21 @@ function fetchGallery() {
     });
 };
 
+const gallery = new SimpleLightbox('.gallery a', {
+    scrollZoom: false,
+    captionsData: 'alt',
+    captionDelay: 250,
+});
+
 
 function appendGalleryImg(img) {
     //refs.gallery.insertAdjacentHTML('beforeend', galleryItemTpl(img));
     console.log(img);
-    //render(img);
-    simplelightbox(img);
+    render(img);
+    gallery.refresh();
 }
 
-let gallery = new SimpleLightbox('.gallery');
-console.log(gallery);
-
-gallery.on('show.simplelightbox', function simplelightbox(img) {
-    render(img);
-});
+//console.log(gallery);
 
 const render = (img) => {
 
