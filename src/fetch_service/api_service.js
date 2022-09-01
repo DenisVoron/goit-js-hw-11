@@ -8,21 +8,36 @@ export default class PixApiService {
     constructor() {
         this.query = '';
         this.page = 1;
+        /*this.amountHits = 0;
+        this.hits = {};*/
     }
-    fetchPhoto() {
+    async fetchPhoto() {
         console.log(this);
 
-        return axios.get(`${BASE_URL}?key=${API_KEY}&q=${this.query}&${SETTINGS_URL}&page=${this.page}`)
-            .then(img => {
-                //console.log(img.data.hits);
+        try {
+            const img = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${this.query}&${SETTINGS_URL}&page=${this.page}`);
+            //this.amountHits += img.data.hits.length;
 
-                this.page += 1;
+            //this.hits = img;
+            //console.log(this.hits);
+            this.page += 1;
+            return img;          //return img.data.hits;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-                return img.data.hits;
+    /*addAmountHits() {
 
-            }).catch(error => {
-                console.log(error);
-            });
+        console.log(this.amountHits);
+        return this.amountHits;
+
+        //return this.amountHits;
+        //addAmountHits(img);
+    }*/
+
+    totalHits() {
+        return this.hits;
     }
 
     resetPage() {
@@ -36,5 +51,6 @@ export default class PixApiService {
 
     set searchQuery(newQuery) {
         this.query = newQuery;
+        console.log(this.query);
     }
 }
