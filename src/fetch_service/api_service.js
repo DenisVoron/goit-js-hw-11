@@ -8,33 +8,22 @@ export default class PixApiService {
     constructor() {
         this.query = '';
         this.page = 1;
-        /*this.amountHits = 0;
-        this.hits = {};*/
     }
     async fetchPhoto() {
-        console.log(this);
+        //console.log(this);
 
         try {
             const img = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${this.query}&${SETTINGS_URL}&page=${this.page}`);
-            //this.amountHits += img.data.hits.length;
 
-            //this.hits = img;
-            //console.log(this.hits);
             this.page += 1;
-            return img;          //return img.data.hits;
+
+            return img;
+
         } catch (error) {
             console.log(error);
         }
     }
 
-    /*addAmountHits() {
-
-        console.log(this.amountHits);
-        return this.amountHits;
-
-        //return this.amountHits;
-        //addAmountHits(img);
-    }*/
 
     totalHits() {
         return this.hits;

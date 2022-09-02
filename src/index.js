@@ -12,7 +12,6 @@ let amountHits = 0;
 const refs = {
     form: document.querySelector('#search-form'),
     gallery: document.querySelector('.gallery'),
-    //loadMoreBtn: document.querySelector('.load-more'),
 }
 
 const loadMoreBtn = new LoadMoreBtn({
@@ -39,21 +38,12 @@ function onFormSubmit(e) {
     fetchGallery()
 }
 
-/*function onLoadMore() {
-    loadMoreBtn.disable();
-
-    pixApiService.fetchPhoto().then(img => {
-        appendGalleryImg(img);
-        loadMoreBtn.enable();
-    });
-}*/
 
 function fetchGallery() {
 
     loadMoreBtn.disable();
     pixApiService.fetchPhoto().then(img => {
         appendGalleryImg(img.data.hits);
-        //console.log(img);
 
         if (img.data.hits.length === 0) {
             Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
@@ -63,17 +53,9 @@ function fetchGallery() {
     });
 };
 
-
-function disableBtnAmountHits() {
-
-    //const amountHits = pixApiService.addAmountHits();
-    //console.log(amountHits);
-
-    pixApiService.fetchPhoto().then(img => {
-        console.log(img);
-        //console.log(img.data.total);
-        console.log(img.data.totalHits);
-        console.log(img.data.hits.length);
+async function disableBtnAmountHits() {
+    try {
+        const img = await pixApiService.fetchPhoto();
 
         amountHits += img.data.hits.length;
         console.log(amountHits);
@@ -81,19 +63,17 @@ function disableBtnAmountHits() {
             loadMoreBtn.hide();
             Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
         }
-    }).catch(error => {
-        console.log(error);
+
+        console.log(img);
+    } catch (error) {
         if (error) {
             loadMoreBtn.hide();
             Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
         }
-    })
+    }
 
-
-    /*pixApiService.addAmountHits().then(amountHits => {
-        console.log(amountHits);
-    });*/
 }
+
 
 const gallery = new SimpleLightbox('.gallery a', {
     scrollZoom: false,
@@ -104,16 +84,12 @@ const gallery = new SimpleLightbox('.gallery a', {
 
 function appendGalleryImg(img) {
 
-    //pixApiService.addAmountHits();
-    //refs.gallery.insertAdjacentHTML('beforeend', galleryItemTpl(img));
     console.log(img);
     console.log(img)
     render(img);
     gallery.refresh();
     disableBtnAmountHits();
 }
-
-//console.log(gallery);
 
 const render = (img) => {
 
